@@ -1,0 +1,15 @@
+${AnsiColor.BLUE}
+______ _   ___   __   ___________ _   _  _____        ___  ______ _____
+| ___ \ | | \ \ / /  |___  /  _  | \ | ||  ___|      / _ \ | ___ \_   _|
+| |_/ / | | |\ V /_____ / /| | | |  \| || |__ ______/ /_\ \| |_/ / | |
+| ___ \ | | | \ /______/ / | | | | . ` ||  __|______|  _  ||  __/  | |
+| |_/ / |_| | | |    ./ /__\ \_/ / |\  || |___      | | | || |    _| |_
+\____/ \___/  \_/    \_____/\___/\_| \_/\____/      \_| |_/\_|    \___/
+
+${AnsiColor.YELLOW}Aplicacao:${AnsiColor.GREEN}         ${spring.application.name}
+${AnsiColor.YELLOW}API Version:${AnsiColor.GREEN}       ${spring.application.version}
+${AnsiColor.YELLOW}Java Version:${AnsiColor.GREEN}      ${java.version}
+${AnsiColor.YELLOW}Spring Boot:${AnsiColor.GREEN}       ${spring-boot.version}
+${AnsiColor.YELLOW}Perfil:${AnsiColor.GREEN}            ${spring.profiles.active}
+${AnsiColor.YELLOW}Porta:${AnsiColor.GREEN}             ${server.port}
+${AnsiColor.YELLOW}PID:${AnsiColor.GREEN}               ${pid}

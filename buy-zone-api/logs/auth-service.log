@@ -1,0 +1,94 @@
+2025-12-04T16:54:15.148-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] c.s.buy_zone_api.BuyZoneApiApplication   : Starting BuyZoneApiApplication v1.0.0 using Java 25.0.1 with PID 25088 (C:\IdeaProjects\buy-zone-api\buy-zone-api\build\classes\java\main started by frank in C:\IdeaProjects\buy-zone-api\buy-zone-api)
+2025-12-04T16:54:15.150-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] c.s.buy_zone_api.BuyZoneApiApplication   : The following 1 profile is active: "test"
+2025-12-04T16:54:16.197-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-04T16:54:16.510-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 294 ms. Found 12 JPA repository interfaces.
+2025-12-04T16:54:17.747-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e4aeb8a0-9d58-3243-b0da-55b90f60230e
+2025-12-04T16:54:18.436-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8083 (http)
+2025-12-04T16:54:18.459-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-04T16:54:18.459-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.14]
+2025-12-04T16:54:18.525-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 3330 ms
+2025-12-04T16:54:18.898-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-04T16:54:18.958-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 7.1.8.Final
+2025-12-04T16:54:19.375-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-04T16:54:19.405-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-04T16:54:19.549-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-12-04T16:54:19.552-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-04T16:54:19.605-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:testdb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: TESTDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DatasourceConnectionProviderImpl
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-04T16:54:20.059-03:00  WARN [buy-zone-api,,] 25088 --- [buy-zone-api] [main] org.hibernate.mapping.RootClass          : HHH000038: Composite id class does not override equals(): com.sysout.buy_zone_api.models.entities.OrderItemPK
+2025-12-04T16:54:20.785-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-04T16:54:20.880-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04T16:54:20.965-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-04T16:54:21.409-03:00  WARN [buy-zone-api,,] 25088 --- [buy-zone-api] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-04T16:54:22.272-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userService
+2025-12-04T16:54:23.754-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 5 endpoints beneath base path '/actuator'
+2025-12-04T16:54:23.835-03:00  WARN [buy-zone-api,,] 25088 --- [buy-zone-api] [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-12-04T16:54:23.841-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04T16:54:23.843-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-04T16:54:23.845-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-12-04T16:54:23.855-03:00  INFO [buy-zone-api,,] 25088 --- [buy-zone-api] [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-12-04T16:54:23.866-03:00 ERROR [buy-zone-api,,] 25088 --- [buy-zone-api] [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8083 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8083 or configure this application to listen on another port.
+
+2025-12-04T16:55:05.844-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] c.s.buy_zone_api.BuyZoneApiApplication   : Starting BuyZoneApiApplication v1.0.0 using Java 25.0.1 with PID 20928 (C:\IdeaProjects\buy-zone-api\buy-zone-api\build\classes\java\main started by frank in C:\IdeaProjects\buy-zone-api\buy-zone-api)
+2025-12-04T16:55:05.847-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] c.s.buy_zone_api.BuyZoneApiApplication   : The following 1 profile is active: "test"
+2025-12-04T16:55:06.867-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-04T16:55:06.968-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 91 ms. Found 12 JPA repository interfaces.
+2025-12-04T16:55:07.304-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=e4aeb8a0-9d58-3243-b0da-55b90f60230e
+2025-12-04T16:55:07.801-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8086 (http)
+2025-12-04T16:55:07.815-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-04T16:55:07.816-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.14]
+2025-12-04T16:55:07.868-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1963 ms
+2025-12-04T16:55:08.141-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-04T16:55:08.184-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 7.1.8.Final
+2025-12-04T16:55:08.575-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-04T16:55:08.604-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-04T16:55:08.742-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-12-04T16:55:08.743-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-04T16:55:08.791-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:testdb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: TESTDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DatasourceConnectionProviderImpl
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-04T16:55:09.221-03:00  WARN [buy-zone-api,,] 20928 --- [buy-zone-api] [main] org.hibernate.mapping.RootClass          : HHH000038: Composite id class does not override equals(): com.sysout.buy_zone_api.models.entities.OrderItemPK
+2025-12-04T16:55:09.945-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-04T16:55:10.045-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04T16:55:10.132-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-04T16:55:10.591-03:00  WARN [buy-zone-api,,] 20928 --- [buy-zone-api] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-04T16:55:11.489-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userService
+2025-12-04T16:55:13.284-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 5 endpoints beneath base path '/actuator'
+2025-12-04T16:55:13.410-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8086 (http) with context path '/'
+2025-12-04T16:55:13.429-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [main] c.s.buy_zone_api.BuyZoneApiApplication   : Started BuyZoneApiApplication in 8.228 seconds (process running for 8.844)
+2025-12-04T16:56:04.609-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [http-nio-8086-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-04T16:56:04.609-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [http-nio-8086-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-12-04T16:56:04.611-03:00  INFO [buy-zone-api,,] 20928 --- [buy-zone-api] [http-nio-8086-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms

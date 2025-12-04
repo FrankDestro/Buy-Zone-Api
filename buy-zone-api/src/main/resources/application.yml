@@ -1,9 +1,9 @@
 spring:
   application:
     name: buy-zone-api
-    version: 1.0.0 # Versao da API
+    version: 1.0.0
   profiles:
-    active: test
+    active: dev
   output:
     ansi:
       enabled: ALWAYS
@@ -20,7 +20,7 @@ logging:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 
 server:
-  port: ${SERVER_PORT:8090}
+  port: ${SERVER_PORT:8087}
 
 info:
   app:
@@ -28,3 +28,15 @@ info:
     api-version: ${spring.application.version}
     java-version: ${java.version}
     spring-boot-version: ${spring-boot.version}
+
+# ==================================
+# Configura��o Security application
+# ==================================
+security:
+  client-id: ${CLIENT_ID:myappclient}
+  client-secret: ${CLIENT_SECRET:myappclient123}
+  jwt:
+    duration: ${JWT_DURATION:86400}
+
+pagseguro:
+  authorization-token: ${PAGSEGURO_AUTH_TOKEN}

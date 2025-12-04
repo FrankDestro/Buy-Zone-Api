@@ -1,0 +1,90 @@
+networks:
+  buy_zone_app_network:
+    driver: bridge
+
+volumes:
+  grafana-storage:
+
+services:
+  # ====================================================================================================================
+  # POSTGRES BUY ZONE ECOMMERCE DB
+  # ====================================================================================================================
+  postgres-buy-zone:
+    image: postgres:latest
+    restart: unless-stopped
+    container_name: postgres-buy-zone-db
+    environment:
+      POSTGRES_DB: buy-zone-db
+      POSTGRES_PASSWORD: 1234567
+      TZ: "America/Sao_Paulo"
+    ports:
+      - 5439:5432
+    volumes:
+      - ./data/buy-zone-db/data:/etc/postgresql/data
+    networks:
+      - buy_zone_app_network
+    profiles:
+      - buy-zone-database
+
+  # ====================================================================================================================
+  # PGADMIN
+  # ====================================================================================================================
+  pgadmin-buy-zone:
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    container_name: guidb-pgadmin-4-buy-zone
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: 1234567
+    ports:
+      - 5053:80
+    volumes:
+      - ./data/pgadmin:/etc/pgadmin
+    networks:
+      - buy_zone_app_network
+    profiles:
+      - pgadmin-guid
+
+  # ====================================================================================================================
+  # PROMETHEUS
+  # ====================================================================================================================
+  prometheus-microservice:
+    image: prom/prometheus:latest
+    container_name: prometheus-hr-microservice
+    networks:
+      - buy_zone_app_network
+    volumes:
+      - ./observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:z
+      - ./dados:/prometheus
+    ports:
+      - "${PROMETHEUS_PORT}:9090"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+    user: root
+    restart: unless-stopped
+    profiles:
+      - observability
+
+  # ====================================================================================================================
+  # GRAFANA
+  # ====================================================================================================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana-hr-microservice
+    networks:
+      - buy_zone_app_network
+    ports:
+      - "${GRAFANA_PORT}:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    restart: unless-stopped
+    depends_on:
+      - prometheus-microservice
+    profiles:
+      - observability

@@ -1,6 +1,6 @@
 package com.sysout.buy_zone_api.services.validation;
 
-import com.sysout.buy_zone_api.controller.FieldMessage;
+import com.sysout.buy_zone_api.controller.exceptions.FieldMessage;
 import com.sysout.buy_zone_api.models.dto.UserInsertDTO;
 import com.sysout.buy_zone_api.models.entities.User;
 import com.sysout.buy_zone_api.repository.UserRepository;

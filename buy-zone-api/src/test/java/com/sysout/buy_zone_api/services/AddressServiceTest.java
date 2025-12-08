@@ -1,0 +1,150 @@
+package com.sysout.buy_zone_api.services;
+
+import com.sysout.buy_zone_api.factory.AddressFactory;
+import com.sysout.buy_zone_api.factory.UserFactory;
+import com.sysout.buy_zone_api.mappers.AddressDTOMapper;
+import com.sysout.buy_zone_api.models.dto.AddressDTO;
+import com.sysout.buy_zone_api.models.entities.Address;
+import com.sysout.buy_zone_api.models.entities.User;
+import com.sysout.buy_zone_api.repository.AddressRepository;
+import com.sysout.buy_zone_api.repository.UserRepository;
+import com.sysout.buy_zone_api.services.exceptions.AccessDeniedException;
+import com.sysout.buy_zone_api.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(SpringExtension.class)
+class AddressServiceTest {
+
+    @InjectMocks
+    @Spy
+    private AddressService addressService;
+
+    @Mock
+    private AddressRepository addressRepository;
+
+    @Mock
+    private UserService userService;
+
+    @Mock
+    private AddressDTOMapper addressDTOMapper;
+
+    @Mock
+    private UserRepository userRepository;
+
+    private User user;
+    private AddressDTO addressDTO;
+    private Address address;
+    private List<Address> addressList;
+    private List<AddressDTO> addressDTOList;
+    private long existingAddressId;
+    private long nonExistingAddressId;
+    private long existingUserId;
+    private long nonExistingUserId;
+
+    @BeforeEach
+    void Setup() throws Exception {
+        user = UserFactory.createUserClient();
+        address = AddressFactory.createAddress();
+        addressDTO = AddressFactory.createAddressDTO();
+        addressList = Arrays.asList(address);
+        addressDTOList = Arrays.asList(addressDTO);
+        existingAddressId = 1L;
+        existingUserId = 10L;
+        nonExistingUserId = 10000l;
+    }
+
+    @Test
+    void insertAddressShouldReturnAddressDTO() {
+        when(userService.authenticated()).thenReturn(user);
+        doReturn(user).when(userService).getUser(user.getId());
+        when(addressDTOMapper.toAddressEntity(addressDTO)).thenReturn(address);
+        when(addressDTOMapper.toAddressDTO(address)).thenReturn(addressDTO);
+        when(addressRepository.save(ArgumentMatchers.any())).thenReturn(address);
+
+        AddressDTO result = addressService.insertAddress(addressDTO);
+
+        assertNotNull(result);
+        verify(addressRepository, times(1)).save(address);
+    }
+
+    @Test
+    void findAllAddressListShouldReturnListAddressDTO() {
+        when(userService.authenticated()).thenReturn(user);
+        when(addressRepository.searchAddressByUserId(ArgumentMatchers.any())).thenReturn(addressList);
+        when(addressDTOMapper.toAddressDTO(address)).thenReturn(addressDTO);
+
+        List<AddressDTO> result = addressService.findAllAddressList();
+
+        assertNotNull(result);
+        verify(addressRepository, times(1)).searchAddressByUserId(user.getId());
+    }
+
+    @Test
+    void findByIdShouldReturnAddressDTO() {
+        when(userService.authenticated()).thenReturn(user);
+        when(addressRepository.getReferenceById(existingAddressId)).thenReturn(address);
+        when(addressDTOMapper.toAddressDTO(address)).thenReturn(addressDTO);
+        when(addressService.findAddressById(existingAddressId)).thenReturn(address);
+
+        AddressDTO result = addressService.findById(existingAddressId);
+
+        assertNotNull(result);
+        assertEquals(addressDTO, result);
+    }
+
+    @Test
+    void updateShouldReturnAddressDTO() {
+
+        when(userService.authenticated()).thenReturn(user);
+        when(addressService.findAddressById(existingAddressId)).thenReturn(address);
+        doNothing().when(addressService).checkOwnership(address, user.getId());
+        doNothing().when(addressDTOMapper).updateAddressFromDTO(addressDTO, address);
+        when(addressRepository.save(ArgumentMatchers.any())).thenReturn(address);
+        when(addressDTOMapper.toAddressDTO(address)).thenReturn(addressDTO);
+
+        AddressDTO result = addressService.update(existingAddressId, addressDTO);
+
+        assertNotNull(result);
+    }
+
+    @Test
+    void updateShouldThrowResourceNotFoundExceptionWhenIdDoesNotExists() {
+
+        when(userService.authenticated()).thenReturn(user);
+        when(addressRepository.getReferenceById(nonExistingAddressId)).thenReturn(null);
+        doThrow(EntityNotFoundException.class).when(addressService).findAddressById(nonExistingAddressId);
+
+        assertThrows(ResourceNotFoundException.class, () -> {
+            addressService.update(nonExistingAddressId, addressDTO);
+        });
+
+    }
+
+    @Test
+    void checkOwnershipShouldThrowAccessDeniedExceptionWhenUserIdDoesNotMatch() {
+
+        Long userIdAuthenticated = 1L;
+        Long userIdAddressDifferent = 2L;
+
+        user.setId(userIdAddressDifferent);
+        address.setUser(user);
+
+        assertThrows(AccessDeniedException.class, () -> {
+            addressService.checkOwnership(address, userIdAuthenticated);
+        });
+    }
+}

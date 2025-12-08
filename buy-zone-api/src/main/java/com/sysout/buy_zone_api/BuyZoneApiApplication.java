@@ -11,5 +11,5 @@ public class BuyZoneApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BuyZoneApiApplication.class, args);
 	}
-
 }
+

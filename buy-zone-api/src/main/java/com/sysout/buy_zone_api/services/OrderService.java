@@ -27,9 +27,6 @@ public class OrderService {
 
     private final List<PaymentStrategy> paymentStrategies;
 
-    @Autowired
-    private PaymentStrategy paymentStrategy;
-
     @Transactional(readOnly = true)
     public OrderDTO findById(Long id) {
         Order order = repository.findById(id).orElseThrow(

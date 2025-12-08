@@ -4,17 +4,17 @@ import com.sysout.buy_zone_api.enums.PaymentStatus;
 import com.sysout.buy_zone_api.models.entities.Order;
 import com.sysout.buy_zone_api.models.entities.Payment;
 import com.sysout.buy_zone_api.repository.PaymentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@RequiredArgsConstructor
 @Service
 public class PaymentService {
 
-    @Autowired
-    private PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
 
     public Payment createPayment(Order order) {
         Payment payment = new Payment();

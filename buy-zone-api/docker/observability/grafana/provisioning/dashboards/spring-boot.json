@@ -1,0 +1,128 @@
+{
+  "title": "Buy Zone API – Dashboard Visual (100% funcional)",
+  "uid": "buy-zone-api-real",
+  "tags": ["spring-boot", "buy-zone-api", "visual"],
+  "style": "dark",
+  "timezone": "browser",
+  "editable": true,
+  "refresh": "30s",
+  "schemaVersion": 37,
+  "version": 1,
+  "templating": {
+    "list": [
+      {
+        "name": "DS_PROMETHEUS",
+        "type": "datasource",
+        "query": "prometheus",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "current": {}
+      }
+    ]
+  },
+  "panels": [
+    {
+      "title": "CPU do Processo Java (%)",
+      "type": "gauge",
+      "gridPos": { "x": 0, "y": 0, "w": 8, "h": 7 },
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [{ "expr": "process_cpu_usage{job=\"buy-zone-api\"} * 100", "refId": "A" }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": { "steps": [{ "color": "green" }, { "value": 70, "color": "yellow" }, { "value": 90, "color": "red" }] }
+        }
+      }
+    },
+    {
+      "title": "Heap Usage (%)",
+      "type": "gauge",
+      "gridPos": { "x": 8, "y": 0, "w": 8, "h": 7 },
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [{
+        "expr": "jvm_memory_used_bytes{area=\"heap\", job=\"buy-zone-api\"} / jvm_memory_committed_bytes{area=\"heap\", job=\"buy-zone-api\"} * 100",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "thresholds": { "steps": [{ "color": "green" }, { "value": 75, "color": "yellow" }, { "value": 90, "color": "red" }] }
+        }
+      }
+    },
+    {
+      "title": "Requests / segundo",
+      "type": "gauge",
+      "gridPos": { "x": 16, "y": 0, "w": 8, "h": 7 },
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [{ "expr": "sum(rate(http_server_requests_seconds_count{job=\"buy-zone-api\"}[5m]))", "refId": "A" }],
+      "fieldConfig": { "defaults": { "unit": "reqps", "min": 0 } }
+    },
+
+    {
+      "title": "Requests por Endpoint (últimos 5min)",
+      "type": "bargauge",
+      "gridPos": { "x": 0, "y": 7, "w": 12, "h": 9 },
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [{
+        "expr": "topk(10, sum by(uri) (rate(http_server_requests_seconds_count{job=\"buy-zone-api\"}[5m])))",
+        "legendFormat": "{{uri}}",
+        "refId": "A"
+      }],
+      "options": { "displayMode": "basic", "orientation": "horizontal" },
+      "fieldConfig": { "defaults": { "unit": "reqps" } }
+    },
+
+    {
+      "title": "Latência Média (segundos)",
+      "type": "gauge",
+      "gridPos": { "x": 12, "y": 7, "w": 12, "h": 9 },
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [{
+        "expr": "sum(rate(http_server_requests_seconds_sum{job=\"buy-zone-api\"}[5m])) / sum(rate(http_server_requests_seconds_count{job=\"buy-zone-api\"}[5m]))",
+        "refId": "A"
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "decimals": 3,
+          "thresholds": { "steps": [{ "color": "green" }, { "value": 0.5, "color": "yellow" }, { "value": 2, "color": "red" }] }
+        }
+      }
+    },
+
+    {
+      "title": "Heap – Used vs Free",
+      "type": "piechart",
+      "gridPos": { "x": 0, "y": 16, "w": 12, "h": 8 },
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        { "expr": "sum(jvm_memory_used_bytes{area=\"heap\", job=\"buy-zone-api\"})", "legendFormat": "Usado", "refId": "A" },
+        { "expr": "sum(jvm_memory_committed_bytes{area=\"heap\", job=\"buy-zone-api\"}) - sum(jvm_memory_used_bytes{area=\"heap\", job=\"buy-zone-api\"})", "legendFormat": "Livre", "refId": "B" }
+      ],
+      "options": { "pieType": "donut", "legend": { "displayMode": "list", "placement": "right" }},
+      "fieldConfig": { "defaults": { "unit": "bytes" } }
+    },
+
+    {
+      "title": "Threads (Live / Daemon)",
+      "type": "bargauge",
+      "gridPos": { "x": 12, "y": 16, "w": 12, "h": 8 },
+      "datasource": "${DS_PROMETHEUS}",
+      "targets": [
+        { "expr": "jvm_threads_live_threads{job=\"buy-zone-api\"}", "legendFormat": "Live", "refId": "A" },
+        { "expr": "jvm_threads_daemon_threads{job=\"buy-zone-api\"}", "legendFormat": "Daemon", "refId": "B" }
+      ],
+      "options": { "displayMode": "basic", "orientation": "horizontal" },
+      "fieldConfig": { "defaults": { "unit": "short" } }
+    }
+  ],
+  "time": { "from": "now-1h", "to": "now" },
+  "annotations": { "list": [] },
+  "links": []
+}

@@ -29,9 +29,6 @@ spring:
 server:
   port: ${SERVER_PORT:8087}
 
-output:
-  ansi:
-    enabled: ALWAYS
 # ==================================
 # RabbitMQ
 # ==================================
@@ -76,11 +73,8 @@ management:
 # configuração de logging
 # ==================================
 logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n"
   level:
     root: INFO
-    com.br.sysout.user_service: DEBUG
-  file:
-    name: logs/buy-zone-api.log
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+

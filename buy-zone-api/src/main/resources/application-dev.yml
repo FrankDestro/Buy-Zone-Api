@@ -1,3 +1,6 @@
+output:
+  ansi:
+    enabled: ALWAYS
 # ==================================
 # Configuração Application
 # ==================================
@@ -5,14 +8,13 @@ spring:
   cloud:
     config:
       enabled: false
-#  jpa:
-#    generate-ddl: true
-#    properties:
-#      jakarta.persistence.schema-generation.scripts.action: create
-#      jakarta.persistence.schema-generation.scripts.create-target: ddl_create14.sql
-#      jakarta.persistence.schema-generation.create-source: metadata
-#      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
-
+  # jpa:
+  #   generate-ddl: true
+  #   properties:
+  #     jakarta.persistence.schema-generation.scripts.action: create
+  #     jakarta.persistence.schema-generation.scripts.create-target: ddl_create14.sql
+  #     jakarta.persistence.schema-generation.create-source: metadata
+  #     hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5439/buy-zone-db
@@ -26,36 +28,20 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
 server:
   port: ${SERVER_PORT:8087}
-
-# ==================================
-# RabbitMQ
-# ==================================
-rabbitmq:
-  host: localhost
-  port: 5672
-  username: administrador
-  password: r5h184cz9
-
-# ==================================
-# Configurações das filas como producer
-# ==================================
-app:
-  rabbitmq:
-    exchange: chamados.exchange
-    routing-key: chamados.email
-    queue: chamados.email.queue
 
 # ==================================
 # Configuração actuator e observabilidade
 # ==================================
 management:
   endpoints:
-    enabled-by-default: false
     web:
       exposure:
         include: refresh, health, info, metrics, prometheus
+    access:
+      default:
   endpoint:
     refresh:
       enabled: true
@@ -70,7 +56,7 @@ management:
       enabled: true
 
 # ==================================
-# configuração de logging
+# Configuração de logging
 # ==================================
 logging:
   pattern:
@@ -78,3 +64,21 @@ logging:
   level:
     root: INFO
 
+springdoc:
+  swagger-ui:
+    operationsSorter: method
+    path: /swagger-ui.html
+  api-docs:
+    path: /buy-zone/api-docs
+
+pagseguro:
+  authorization-token: ${PAGSEGURO_AUTH_TOKEN}
+
+# ==================================
+# Configuração Security application
+# ==================================
+security:
+  client-id: ${CLIENT_ID:myappclient}
+  client-secret: ${CLIENT_SECRET:myappclient123}
+  jwt:
+    duration: ${JWT_DURATION:86400}

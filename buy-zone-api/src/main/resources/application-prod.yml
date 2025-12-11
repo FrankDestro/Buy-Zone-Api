@@ -1,104 +1,84 @@
+output:
+  ansi:
+    enabled: ALWAYS
 # ==================================
-# Configuração Application
+# Configuração Application - Production
 # ==================================
 spring:
   cloud:
     config:
       enabled: false
-    jpa:
-      hibernate:
-        ddl-auto: none
-      properties:
-        jakarta.persistence.schema-generation.scripts.action: create
-        jakarta.persistence.schema-generation.scripts.create-target: ddl_create9.sql
-        jakarta.persistence.schema-generation.create-source: metadata
-        hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  # jpa:
+  #   generate-ddl: true
+  #   properties:
+  #     jakarta.persistence.schema-generation.scripts.action: create
+  #     jakarta.persistence.schema-generation.scripts.create-target: ${JPA_SCRIPTS_CREATE_TARGET}
+  #     jakarta.persistence.schema-generation.create-source: ${JPA_CREATE_SOURCE}
+  #     hibernate.dialect: ${HIBERNATE_DIALECT}
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5434/user-service-db
-    username: postgres
-    password: 1234567
+    driver-class-name: ${DATASOURCE_DRIVER_CLASS_NAME}
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
 
-  #  jpa:
-  #    hibernate:
-  #      ddl-auto: update
-  #    show-sql: true
-  #    properties:
-  #      hibernate:
-  #        dialect: org.hibernate.dialect.PostgreSQLDialect
-  web:
-    cors:
-      mappings:
-        - path: "/**"
-          allowed-origins:
-            - "http://localhost:3000"
-            - "http://localhost:5173/**"
-            - "https://meufront.com"
-          allowed-methods:
-            - GET
-            - POST
-            - PUT
-            - DELETE
-            - PATCH
-            - OPTIONS
-          allowed-headers: "*"
-          allow-credentials: true
-          max-age: 3600
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_HIBERNATE_DDL_AUTO}
+    show-sql: ${JPA_SHOW_SQL}
+    properties:
+      hibernate:
+        dialect: ${HIBERNATE_DIALECT}
+
 server:
-  port: ${SERVER_PORT:8090}
-
-output:
-  ansi:
-    enabled: ALWAYS
-# ==================================
-# RabbitMQ
-# ==================================
-rabbitmq:
-  host: localhost
-  port: 5672
-  username: administrador
-  password: r5h184cz9
-
-# ==================================
-# Configurações das filas como producer
-# ==================================
-app:
-  rabbitmq:
-    exchange: chamados.exchange
-    routing-key: chamados.email
-    queue: chamados.email.queue
+  port: ${SERVER_PORT}
 
 # ==================================
 # Configuração actuator e observabilidade
 # ==================================
 management:
   endpoints:
-    enabled-by-default: false
     web:
       exposure:
-        include: refresh, health, info, metrics, prometheus
+        include: ${MANAGEMENT_ENDPOINTS_INCLUDE}
+    access:
+      default: ${MANAGEMENT_ACCESS_DEFAULT}
   endpoint:
     refresh:
-      enabled: true
+      enabled: ${MANAGEMENT_ENDPOINT_REFRESH_ENABLED}
     health:
-      enabled: true
-      show-details: always
+      enabled: ${MANAGEMENT_ENDPOINT_HEALTH_ENABLED}
+      show-details: ${MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS}
     info:
-      enabled: true
+      enabled: ${MANAGEMENT_ENDPOINT_INFO_ENABLED}
     metrics:
-      enabled: true
+      enabled: ${MANAGEMENT_ENDPOINT_METRICS_ENABLED}
     prometheus:
-      enabled: true
+      enabled: ${MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED}
 
 # ==================================
-# configuração de logging
+# Configuração de logging
 # ==================================
 logging:
-  level:
-    root: INFO
-    com.br.sysout.user_service: DEBUG
-  file:
-    name: logs/buy-zone-api.log
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+    console: "${LOGGING_PATTERN_CONSOLE}"
+  level:
+    root: ${LOGGING_LEVEL_ROOT}
+
+springdoc:
+  swagger-ui:
+    operationsSorter: ${SPRINGDOC_SWAGGER_UI_OPERATIONS_SORTER}
+    path: ${SPRINGDOC_SWAGGER_UI_PATH}
+  api-docs:
+    path: ${SPRINGDOC_API_DOCS_PATH}
+
+pagseguro:
+  authorization-token: ${PAGSEGURO_AUTH_TOKEN}
+
+# ==================================
+# Configuração Security application
+# ==================================
+security:
+  client-id: ${CLIENT_ID}
+  client-secret: ${CLIENT_SECRET}
+  jwt:
+    duration: ${JWT_DURATION}

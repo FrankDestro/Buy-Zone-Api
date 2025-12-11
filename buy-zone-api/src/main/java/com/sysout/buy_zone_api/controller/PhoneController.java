@@ -2,6 +2,7 @@ package com.sysout.buy_zone_api.controller;
 
 import com.sysout.buy_zone_api.models.dto.PhoneDTO;
 import com.sysout.buy_zone_api.services.PhoneService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class PhoneController {
 
     private final PhoneService phoneService;
 
+    @Operation(tags = "Phones", summary = "Salvar número de telefone", description = "Insere um novo número de telefone (requer ROLE_ADMIN ou ROLE_OPERATOR)")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
     @PostMapping
     public ResponseEntity<PhoneDTO> savePhoneNumber(@Valid @RequestBody PhoneDTO phoneDTO) {
@@ -27,6 +29,7 @@ public class PhoneController {
         return ResponseEntity.created(uri).body(phoneDTO);
     }
 
+    @Operation(tags = "Phones", summary = "Deletar número de telefone", description = "Remove um número de telefone pelo id (requer ROLE_ADMIN ou ROLE_OPERATOR)")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deletePhoneNumber(@PathVariable Long id) {

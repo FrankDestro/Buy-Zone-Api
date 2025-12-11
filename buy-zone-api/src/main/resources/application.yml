@@ -4,39 +4,9 @@ spring:
     version: 1.0.0
   profiles:
     active: dev
-  output:
-    ansi:
-      enabled: ALWAYS
-
-springdoc:
-  swagger-ui:
-    operationsSorter: method
-    path: /swagger-ui.html
-  api-docs:
-    path: /buy-zone-api/v3/api-docs
-
-logging:
-  pattern:
-    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
-
-server:
-  port: ${SERVER_PORT:8087}
-
 info:
   app:
     name: ${spring.application.name}
     api-version: ${spring.application.version}
     java-version: ${java.version}
     spring-boot-version: ${spring-boot.version}
-
-# ==================================
-# Configura��o Security application
-# ==================================
-security:
-  client-id: ${CLIENT_ID:myappclient}
-  client-secret: ${CLIENT_SECRET:myappclient123}
-  jwt:
-    duration: ${JWT_DURATION:86400}
-
-pagseguro:
-  authorization-token: ${PAGSEGURO_AUTH_TOKEN}

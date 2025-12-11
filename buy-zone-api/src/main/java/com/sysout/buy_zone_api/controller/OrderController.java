@@ -2,6 +2,7 @@ package com.sysout.buy_zone_api.controller;
 
 import com.sysout.buy_zone_api.models.dto.OrderDTO;
 import com.sysout.buy_zone_api.services.OrderService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class OrderController {
 
     private final OrderService service;
 
+    @Operation(tags = "Orders", summary = "Buscar pedido por id", description = "Retorna os dados do pedido pelo id (requer ROLE_ADMIN ou ROLE_OPERATOR)")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<OrderDTO> findById(@PathVariable Long id) {
@@ -25,6 +27,7 @@ public class OrderController {
         return ResponseEntity.ok(dto);
     }
 
+    @Operation(tags = "Orders", summary = "Registrar novo pedido", description = "Cria um novo pedido (requer ROLE_ADMIN ou ROLE_OPERATOR)")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
     @PostMapping
     public ResponseEntity<OrderDTO> recordOder(@Valid @RequestBody OrderDTO dto) {

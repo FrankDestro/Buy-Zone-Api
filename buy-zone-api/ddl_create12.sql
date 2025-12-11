@@ -49,8 +49,8 @@ alter table if exists tb_qrcode_pagseguro add constraint FKgo4035bq76pqx29odk5ju
 alter table if exists tb_qrcode_pagseguro add constraint FK5ltu29dbc6fn4qxlnv832nerp foreign key (pix_response_id) references tb_pix_response_details_pagseguro;
 alter table if exists user_role add constraint FKa68196081fvovjhkek5m97n3y foreign key (role_id) references role;
 alter table if exists user_role add constraint FK430om9qnxgilp5cvcbeyovi37 foreign key (user_id) references tb_user;
-INSERT INTO tb_user (full_name, cpf, birth_date, email, password, created_at, updated_at) VALUES ('Alice Oliveira', '12345678909', '1990-04-10', 'alice.oliveira@gmail.com', '$2a$10$BZEayVp6X1Ry93e44/Rnze0hpK5J3ThbAdUm2OzH.GSWjA4zmtGHW', NOW(), null);
-INSERT INTO tb_user (full_name, cpf, birth_date, email, password, created_at, updated_at) VALUES ('Marcos Santos', '87564323456', '1985-10-30', 'marcos.santos@gmail.com', '$2a$10$BZEayVp6X1Ry93e44/Rnze0hpK5J3ThbAdUm2OzH.GSWjA4zmtGHW', NOW(), null);
+INSERT INTO tb_user (full_name, cpf, birth_date, email, password, created_at, updated_at, account_non_expired, account_non_locked, credentials_non_expired, enabled, mfa_enabled) VALUES ('Alice Oliveira', '12345678909', '1990-04-10', 'alice.oliveira@gmail.com', '$2a$10$BZEayVp6X1Ry93e44/Rnze0hpK5J3ThbAdUm2OzH.GSWjA4zmtGHW', NOW(), null, true, true, true, true, true);
+INSERT INTO tb_user (full_name, cpf, birth_date, email, password, created_at, updated_at, account_non_expired, account_non_locked, credentials_non_expired, enabled, mfa_enabled) VALUES ('Marcos Santos', '87564323456', '1985-10-30', 'marcos.santos@gmail.com', '$2a$10$BZEayVp6X1Ry93e44/Rnze0hpK5J3ThbAdUm2OzH.GSWjA4zmtGHW', NOW(), null, true, true, true, true, true);
 INSERT INTO tb_phone (country, area, number, type, user_id) VALUES (55, 11, 982364758, 'MOBILE', 1);
 INSERT INTO tb_phone (country, area, number, type, user_id) VALUES (55, 11, 24657890, 'HOME', 1);
 INSERT INTO tb_phone (country, area, number, type, user_id) VALUES (55, 19, 975467834, 'MOBILE', 2);

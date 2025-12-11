@@ -45,7 +45,7 @@ dependencies {
     implementation 'com.github.loki4j:loki-logback-appender:1.5.0'
 
     // API Documentation
-    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0")
 
     //Intergration
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'

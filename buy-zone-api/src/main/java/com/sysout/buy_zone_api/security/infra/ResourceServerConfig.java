@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
@@ -20,9 +21,6 @@ import java.util.List;
 @EnableMethodSecurity
 public class ResourceServerConfig {
 
-    /* ================================
-       1. Libera o H2 Console (funciona em dev e test)
-    ================================ */
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @Profile({"dev", "test"})
@@ -40,22 +38,22 @@ public class ResourceServerConfig {
         return http.build();
     }
 
-    /* ================================
-       2. Resource Server principal
-    ================================ */
     @Bean
-    @Order(20)
-    public SecurityFilterChain resourceServerSecurityFilterChain(HttpSecurity http) throws Exception {
+    @Order(2)
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/actuator/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password").permitAll()
+                        .requestMatchers("/oauth2/**", "/.well-known/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/api-docs/**", "/v3/api-docs/**", "/buy-zone/api-docs/**").permitAll()
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
-                );
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
+                .formLogin(Customizer.withDefaults());
 
         return http.build();
     }

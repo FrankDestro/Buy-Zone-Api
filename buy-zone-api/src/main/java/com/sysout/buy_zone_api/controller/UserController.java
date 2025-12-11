@@ -4,6 +4,8 @@ import com.sysout.buy_zone_api.models.dto.UserDTO;
 import com.sysout.buy_zone_api.models.dto.UserInsertDTO;
 import com.sysout.buy_zone_api.models.dto.UserUpdateDTO;
 import com.sysout.buy_zone_api.services.UserService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,15 +31,11 @@ public class UserController {
 
     private final UserService userService;
 
+    @Operation(tags = "Users", summary = "Buscar Usuário por id", description = "Retorna dados do usuário por id")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> findUserById(@PathVariable Long id) {
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication.getPrincipal() instanceof UserDetails userDetails) {
-                log.debug("Nome de usuário: %s".formatted(userDetails.getUsername()));
-                log.debug("Roles: %s".formatted(userDetails.getAuthorities()));
-            }
             UserDTO dto = userService.findUserById(id);
             return ResponseEntity.ok().body(dto);
         } catch (AccessDeniedException e) {
@@ -45,18 +43,23 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acesso negado: " + e.getMessage());
         }
     }
+
+    @Operation(tags = "Users", summary = "Listar usuários paginados", description = "Retorna uma página de usuários com paginação")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {
         Page<UserDTO> listUser = userService.findAllUserPaged(pageable);
         return ResponseEntity.ok().body(listUser);
     }
 
+    @Operation(tags = "Users", summary = "Buscar usuário logado", description = "Retorna os dados do usuário atualmente logado")
     @GetMapping(value = "/logged")
     public ResponseEntity<UserDTO> Profile() {
         UserDTO dto = userService.findUserLogged();
         return ResponseEntity.ok().body(dto);
     }
 
+    @Operation(tags = "Users", summary = "Registrar novo usuário", description = "Cria um novo usuário com os dados fornecidos")
     @PostMapping(value = "/register")
     public ResponseEntity<UserDTO> register(@RequestBody @Valid UserInsertDTO dto) {
         UserDTO newDto = userService.Register(dto);
@@ -64,6 +67,7 @@ public class UserController {
         return ResponseEntity.created(uri).body(newDto);
     }
 
+    @Operation(tags = "Users", summary = "Atualizar usuário", description = "Atualiza os dados do usuário pelo id")
     @PutMapping(value = "/{id}")
     public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO dto) {
         UserDTO newDto = userService.update(id, dto);

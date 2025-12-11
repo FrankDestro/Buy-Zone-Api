@@ -4,6 +4,7 @@ import com.sysout.buy_zone_api.BuyZoneApiApplication;
 import com.sysout.buy_zone_api.models.dto.ProductDTO;
 import com.sysout.buy_zone_api.models.dto.ProductMinDTO;
 import com.sysout.buy_zone_api.services.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class ProductController {
 
     private static final Logger logger = LoggerFactory.getLogger(BuyZoneApiApplication.class);
 
+    @Operation(tags = "Products", summary = "Filtrar produtos com detalhes", description = "Filtra produtos pela categoria e subfiltros com paginação")
     @GetMapping("/filter/details")
     public ResponseEntity<Page<ProductMinDTO>> filterProducts(
             @RequestParam("category") String category,
@@ -36,6 +38,7 @@ public class ProductController {
         return ResponseEntity.ok().body(products);
     }
 
+    @Operation(tags = "Products", summary = "Buscar produto por id", description = "Retorna os dados completos de um produto pelo seu id")
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
         logger.info("TEST DE LOGGING");
@@ -43,6 +46,7 @@ public class ProductController {
         return ResponseEntity.ok(dto);
     }
 
+    @Operation(tags = "Products", summary = "Listar todos os produtos com filtro por nome", description = "Retorna uma página de produtos com filtro opcional pelo nome")
     @GetMapping
     public ResponseEntity<Page<ProductMinDTO>> findAll(
             @RequestParam(name = "name", defaultValue = "") String name,
@@ -51,6 +55,7 @@ public class ProductController {
         return ResponseEntity.ok(dto);
     }
 
+    @Operation(tags = "Products", summary = "Inserir novo produto", description = "Cria um novo produto (requer ROLE_ADMIN)")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
@@ -59,6 +64,7 @@ public class ProductController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @Operation(tags = "Products", summary = "Atualizar produto", description = "Atualiza um produto existente pelo id (requer ROLE_ADMIN)")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductDTO dto) {
@@ -66,6 +72,7 @@ public class ProductController {
         return ResponseEntity.ok().body(dto);
     }
 
+    @Operation(tags = "Products", summary = "Deletar produto", description = "Remove um produto pelo id (requer ROLE_ADMIN)")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
